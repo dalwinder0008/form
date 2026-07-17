@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay-U Checkout</title>
+    <!-- CSS File Link (Dhyan rakhein ye line zaroori hai) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Payment Container -->
+    <div class="checkout-container">
+        
+        <!-- Header Section -->
+        <div class="checkout-header">
+            <h2>PAY-U</h2>
+        </div>
+
+        <!-- Payment Form -->
+        <form id="paymentForm">
+            
+            <!-- Row for First Name & Last Name -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        placeholder="John" 
+                        required
+                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        placeholder="Doe" 
+                        required
+                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"
+                    >
+                </div>
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
+            </div>
+
+            <!-- Contact Input -->
+            <div class="form-group">
+                <label for="phone">Contact Number</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    placeholder="9876543210" 
+                    maxlength="10" 
+                    required
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                >
+            </div>
+
+            <!-- Address Input -->
+            <div class="form-group">
+                <label for="address">Billing Address</label>
+                <input type="text" id="address" placeholder="H.No / Street / Locality" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Proceed to Pay</button>
+
+        </form>
+    </div>
+
+    <!-- JavaScript File Link -->
+    <script src="script.js"></script>
+</body>
+</html>

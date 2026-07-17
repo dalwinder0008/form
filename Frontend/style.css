@@ -1,0 +1,114 @@
+/* Full page setup with smooth background gradient */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+
+
+/* Card layout container */
+.checkout-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* Top header styling */
+.checkout-header {
+    background-color: #fafafa;
+    padding: 25px;
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.checkout-header h2 {
+    margin: 0;
+    color: #007bff;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.checkout-header p {
+    margin: 5px 0 0 0;
+    color: #777;
+    font-size: 14px;
+}
+
+/* Inside form padding */
+form {
+    padding: 30px;
+}
+
+/* Row wrapper for side-by-side inputs (Name fields) */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* Individual input group container */
+.form-group {
+    margin-bottom: 20px;
+    flex: 1; /* Space barabar baantne ke liye */
+}
+
+/* Labels layout */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 14px;
+}
+
+/* Modern Input boxes */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* Input click/focus effect */
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Sleek modern button */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Hover & click action for button */
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn:active {
+    transform: scale(0.99);
+}
+
+
