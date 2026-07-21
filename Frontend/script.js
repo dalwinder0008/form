@@ -1,51 +1,57 @@
-const express = require('express');
-const cors = require('cors');
-const { processPayUPayment } = require('./api/payu');
+document.getElementById("paymentForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-const app = express();
-const port = 3000;
+    const amountField = document.getElementById("amount");
+    const productField = document.getElementById("productinfo");
 
-app.use(cors({ origin: "http://127.0.0.1:5500" }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    const formData = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        amount: amountField ? amountField.value : "10.00",
+        productinfo: productField ? productField.value : "Checkout Items"
+    };
 
-// Payment Hash Generation Endpoint
-app.post('/payment', (req, res) => {
-    try {
-        const data = req.body;
-        
-        console.log("\n====== Official PayU Hash Request ======");
-        console.log(`User: ${data.firstName} | Email: ${data.email}`);
-        console.log("========================================\n");
+    console.log("Sending data to backend...", formData);
 
-        const payuConfigData = processPayUPayment(data);
-        res.json({ success: true, ...payuConfigData });
-    } catch (error) {
-        console.error("API Processing Error:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-});
-
-// PayU Response Handling Endpoint (No SMTP - Screen Display)
-app.post('/response', (req, res) => {
-    try {
-        const { status, txnid, amount, firstname } = req.body;
-
-        console.log(`\n====== Transaction Callback Webhook ======`);
-        console.log(`ID: ${txnid} | Status: ${status} | Buyer: ${firstname}`);
-        console.log("==========================================\n");
-
-        if (status === 'success') {
-            res.send(`<h1>Payment Successful! 🎉</h1><p>Thank you ${firstname}, your payment of $${amount} USD was processed.</p>`);
-        } else {
-            res.send(`<h1>Payment Failed! ❌</h1><p>Transaction with ID ${txnid} was declined.</p>`);
+    fetch("http://localhost:3000/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Backend response error status: " + response.status);
         }
-    } catch (error) {
-        console.error("Callback Route Error:", error);
-        res.status(500).send("Error processing response");
-    }
-});
+        return response.json();
+    })
+    .then(resData => {
+        if (resData.success && resData.actionData) {
+            console.log("Hash generated successfully. Redirecting to PayU...");
+            
+            const hiddenForm = document.createElement("form");
+            hiddenForm.method = "POST";
+            hiddenForm.action = resData.payuUrl;
+            hiddenForm.style.display = "none";
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+            Object.keys(resData.actionData).forEach(key => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = resData.actionData[key];
+                hiddenForm.appendChild(input);
+            });
+
+            document.body.appendChild(hiddenForm);
+            hiddenForm.submit();
+        } else {
+            alert("Payment failed");
+        }
+    })
+    .catch(error => {
+        console.error("Network :", error);
+        alert("Server failure");
+    });
 });
