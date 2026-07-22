@@ -31,11 +31,13 @@ document.getElementById("paymentForm").addEventListener("submit", function (even
         if (resData.success && resData.actionData) {
             console.log("Hash generated successfully. Redirecting to PayU...");
             
+            // 🚀 BROWSER COMPATIBLE REDIRECT PIPELINE
             const hiddenForm = document.createElement("form");
             hiddenForm.method = "POST";
             hiddenForm.action = resData.payuUrl;
             hiddenForm.style.display = "none";
 
+            // Saare complex keys aur hashes ko plain inputs banakar insert karna
             Object.keys(resData.actionData).forEach(key => {
                 const input = document.createElement("input");
                 input.type = "hidden";
@@ -45,13 +47,13 @@ document.getElementById("paymentForm").addEventListener("submit", function (even
             });
 
             document.body.appendChild(hiddenForm);
-            hiddenForm.submit();
+            hiddenForm.submit(); // 🔥 Yeh line automatic secure redirection trigger karegi
         } else {
-            alert("Payment failed");
+            alert("Payment handshake failed. Check backend console.");
         }
     })
     .catch(error => {
-        console.error("Network :", error);
-        alert("Server failure");
+        console.error("Network / Server connection error:", error);
+        alert("Server communication failure! Pehle check karein ki terminal me Node server running hai.");
     });
 });
